@@ -81,7 +81,12 @@ class Database():
                           data["transmision"],
                           data["modulo_asociado"]
                         )]
-        self.cur.executemany("INSERT INTO base_maquinas VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", record_to_add )
+
+        Question_marks = "?"
+        for n in range(len(record_to_add[0]) - 1):
+            Question_marks = Question_marks + ", ?"
+
+        self.cur.executemany(f"INSERT INTO base_maquinas VALUES({Question_marks})", record_to_add )
         self.con.commit()
 
 
